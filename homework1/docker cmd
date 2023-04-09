@@ -1,0 +1,5 @@
+sudo docker run -it --rm -p 8000:8000 -t docker-demo-1  //start the container
+sudo docker image rm e20e                               //remove the container
+sudo docker images                                      //show imagesArrayList
+docker ps -a                                            //show all containers
+sudo docker build -t docker-demo-1 .                    //build the container
