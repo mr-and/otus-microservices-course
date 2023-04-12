@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.deploy.deployName }}
+  namespace: {{ .Values.app.namespace }}
+spec:
+  replicas: {{ .Values.app.deploy.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app.deploy.appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app.deploy.appName }}
+    spec:
+      containers:
+        - name: {{ .Values.app.deploy.appName }}
+          image: {{ .Values.app.deploy.image.repository }}/{{ .Values.app.deploy.image.name }}{{ .Values.app.deploy.image.tag }}
+          imagePullPolicy: {{ .Values.app.deploy.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.app.deploy.appPort }}
+          env:
+            - name: DB_HOST   # Setting Database host address from configMap
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: host
+
+            - name: DB_NAME  # Setting Database name from configMap
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: dbName
+
+            - name: DB_USERNAME  # Setting Database username from Secret
+              valueFrom:
+                secretKeyRef:
+                  name: db-secrets
+                  key: username
+
+            - name: DB_PASSWORD # Setting Database password from Secret
+              valueFrom:
+                secretKeyRef:
+                  name: db-secrets
+                  key: password

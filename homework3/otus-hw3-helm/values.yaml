@@ -1,0 +1,30 @@
+app:
+  namespace: otus-hw3
+  service:
+    name: app-service
+    type: ClusterIP
+    port: 80
+  deploy:
+    appName: app
+    deployName: otus-hw-3-deploy
+    replicaCount: 3
+    appPort: 8000
+    image:
+      repository: andrewotuscourse
+      name: hw3-app
+      pullPolicy: IfNotPresent
+      tag: ":latest"
+
+#controller:
+#  kind: DaemonSet
+#
+#  reportNodeInternalIp: true
+#
+#  hostPort:
+#    enabled: true
+#    ports:
+#      http: 80
+#      https: 443
+#
+#  service:
+#    type: NodePort

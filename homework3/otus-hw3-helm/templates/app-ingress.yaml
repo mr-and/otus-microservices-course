@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-ingress-otus-hw-3
+  labels:
+    app: {{ .Release.Name }}-ingress-otus-hw-3
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.org/server-snippets: |
+      location /admin {
+         deny all;
+         return 403 "Go your own way, Stalker!";
+      }
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: "arch.homework"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Values.app.service.name }}
+                port:
+                  number: 80

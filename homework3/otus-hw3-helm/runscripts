@@ -1,0 +1,23 @@
+1. Создать образ для CRUD'а
+2. Создать дефолтный Helm chart
+3. Установить БД Postgresql через Helm
+4. Установить Ingress контроллер
+5. Добавить дефолтные values.yaml для Postgresql и Ingress
+6. Добавить в templates yaml файлы для настройки Pod'ов (Deployments, Nginx, Service, ConfigMap, Secrets)
+7. Добавить Job для накатки данных в БД
+
+
+8. Удалить чарты и поды
+
+kubectl create namespace otus-hw3 \
+&& helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx/ \
+&& helm repo add bitnami https://charts.bitnami.com/bitnami \
+&& helm repo update \
+&& helm install nginx ingress-nginx/ingress-nginx --namespace otus-hw3 --f templates/app-ingress.yaml \
+&& helm install postgres bitnami/postgresql --namespace otus-hw3 --f templates/db-values.yaml
+
+
+
+helm uninstall nginx --namespace otus-hw3 \
+&& helm uninstall postgres --namespace otus-hw3 \
+&& kubectl delete pvc -l release=postgres --namespace otus-hw3
