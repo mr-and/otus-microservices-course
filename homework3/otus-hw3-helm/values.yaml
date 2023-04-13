@@ -12,7 +12,7 @@ app:
     image:
       repository: andrewotuscourse
       name: hw3-app
-      pullPolicy: IfNotPresent
+      pullPolicy: Always
       tag: ":latest"
 
 #controller:

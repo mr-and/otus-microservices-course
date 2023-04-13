@@ -3,5 +3,6 @@ kind : ConfigMap
 metadata:
   name : db-config
 data:
-  host : postgres
+  host : postgres-postgresql
   dbName: postgres
+  port: '5432'

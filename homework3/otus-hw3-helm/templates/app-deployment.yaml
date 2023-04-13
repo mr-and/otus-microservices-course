@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: {{ .Values.app.deploy.deployName }}
   namespace: {{ .Values.app.namespace }}
+  labels:
+    date: "{{ now | unixEpoch }}"
 spec:
   replicas: {{ .Values.app.deploy.replicaCount }}
   selector:
@@ -31,6 +33,12 @@ spec:
                 configMapKeyRef:
                   name: db-config
                   key: dbName
+
+            - name: DB_PORT  # Setting Database port from configMap
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: port
 
             - name: DB_USERNAME  # Setting Database username from Secret
               valueFrom:
