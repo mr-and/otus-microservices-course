@@ -7,24 +7,10 @@ app:
   deploy:
     appName: app
     deployName: otus-hw-3-deploy
-    replicaCount: 3
+    replicaCount: 2
     appPort: 8000
     image:
       repository: andrewotuscourse
       name: hw3-app
       pullPolicy: Always
       tag: ":latest"
-
-#controller:
-#  kind: DaemonSet
-#
-#  reportNodeInternalIp: true
-#
-#  hostPort:
-#    enabled: true
-#    ports:
-#      http: 80
-#      https: 443
-#
-#  service:
-#    type: NodePort

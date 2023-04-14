@@ -1,7 +1,0 @@
-{{/*global:*/}}
-{{/*  postgresql:*/}}
-{{/*    auth:*/}}
-{{/*      postgresPassword: "root"*/}}
-{{/*      username: "root"*/}}
-{{/*      password: "root"*/}}
-{{/*      database: "postgres"*/}}
