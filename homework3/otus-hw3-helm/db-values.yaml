@@ -8,9 +8,11 @@ global:
 
 primary:
   initdb:
+    user: "root"
+    password: "root"
     scripts:
       00_init_script.sql: |
-        CREATE TABLE IF NOT EXISTS postgres.users(id serial PRIMARY KEY, user_name VARCHAR ( 50 ) UNIQUE NOT NULL, first_name VARCHAR ( 50 ) NOT NULL, last_name VARCHAR ( 50 ) NOT NULL, email VARCHAR ( 255 ) UNIQUE NOT NULL, phone VARCHAR ( 50 ) NOT NULL);
-        INSERT INTO postgres.users(user_name, first_name, last_name, email, phone) VALUES ('Tom123', 'Tom', 'Hardy', 'tom@gmail.com', '+3(111)34580') ON CONFLICT DO NOTHING;
-        INSERT INTO postgres.users(user_name, first_name, last_name, email, phone) VALUES ('Jennie', 'Nichols', 'Valwood', 'jennie.nichols@example.com', '+3(272) 790-0888') ON CONFLICT DO NOTHING;
-        INSERT INTO postgres.users(user_name, first_name, last_name, email, phone) VALUES ('Cliff', 'Lindgren', 'Bailey', 'liff.lindgren@email.com', '43 (999) 406-6234') ON CONFLICT DO NOTHING;
+        CREATE TABLE IF NOT EXISTS users(id serial PRIMARY KEY, user_name VARCHAR ( 50 ) UNIQUE NOT NULL, first_name VARCHAR ( 50 ) NOT NULL, last_name VARCHAR ( 50 ) NOT NULL, email VARCHAR ( 255 ) UNIQUE NOT NULL, phone VARCHAR ( 50 ) NOT NULL);
+        INSERT INTO users(user_name, first_name, last_name, email, phone) VALUES ('Tom123', 'Tom', 'Hardy', 'tom@gmail.com', '+3(111)34580') ON CONFLICT DO NOTHING;
+        INSERT INTO users(user_name, first_name, last_name, email, phone) VALUES ('Jennie', 'Nichols', 'Valwood', 'jennie.nichols@example.com', '+3(272) 790-0888') ON CONFLICT DO NOTHING;
+        INSERT INTO users(user_name, first_name, last_name, email, phone) VALUES ('Cliff', 'Lindgren', 'Bailey', 'liff.lindgren@email.com', '43 (999) 406-6234') ON CONFLICT DO NOTHING;

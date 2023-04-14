@@ -18,7 +18,8 @@ helm uninstall nginx --namespace otus-hw3 \
 
 Команды:
 helm upgrade --install postgres bitnami/postgresql --namespace otus-hw3 -f ./db-values.yaml --dry-run > random_file_name.yaml
-
+helm uninstall postgres --namespace otus-hw3
+kubectl delete pvc -n otus-hw3 data-postgres-postgresql-0
 -------------------------------------------------------------------------------
                                 DOCKER
 -------------------------------------------------------------------------------
@@ -38,7 +39,7 @@ docker run -it --rm andrewotuscourse/hw3-app
 kubectl delete clusterrole nginx-ingress
 kubectl delete clusterrolebinding nginx-ingress
 Перезапуск всех подов по маске: kubectl get pods -n otus-hw3 --no-headers=true | awk '/otus-hw-3-deploy/{print $1}'| xargs  kubectl delete -n otus-hw3 pod
-Подключение к поду БД: kubectl exec -it postgres-postgresql-0 -n otus-hw3  -- psql -h localhost -user root --password root -p 5432 -d postgres
+Подключение к поду БД: kubectl exec -it postgres-postgresql-0 -n otus-hw3  -- psql -h localhost -U root --password root -p 5432 -d postgres
 
 -------------------------------------------------------------------------------
                                 CheckHW
