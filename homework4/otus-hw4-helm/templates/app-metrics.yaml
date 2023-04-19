@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: metrics-monitor
+  namespace: otus-hw4
+  labels:
+    app: metrics-monitor
+  namespace: {{ .Values.app.namespace }}
+    
+spec:
+  endpoints:
+    - port: http
+      scrapeTimeout: 10s
+      path: /actuator/prometheus     
+      honorLabels: true
+      scheme: http
+  namespaceSelector:
+    any: true
+  selector:
+    matchLabels:
+      app: "{{ .Values.app.service.name }}"

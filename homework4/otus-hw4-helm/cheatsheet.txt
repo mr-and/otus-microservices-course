@@ -1,0 +1,79 @@
+-------------------------------------------------------------------------------
+                                HELM
+-------------------------------------------------------------------------------
+Создание релизов:
+kubectl create namespace otus-hw4 \
+&& helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx \
+&& helm repo add bitnami https://charts.bitnami.com/bitnami \
+&& helm repo update \
+&& helm install nginx ingress-nginx/ingress-nginx --namespace otus-hw4 -f templates/app-ingress.yaml \
+&& helm install postgres bitnami/postgresql --namespace otus-hw4 -f ./db-values.yaml \
+&& helm install app . --namespace otus-hw4
+
+Удаление релизов:
+helm uninstall nginx --namespace otus-hw4 \
+&& helm uninstall app --namespace otus-hw4 \
+&& helm uninstall postgres --namespace otus-hw4 \
+&& kubectl delete pvc -l release=postgres --namespace otus-hw4
+
+Команды:
+helm upgrade --install postgres bitnami/postgresql --namespace otus-hw4 -f ./db-values.yaml --dry-run > random_file_name.yaml
+helm uninstall postgres --namespace otus-hw4
+kubectl delete pvc -n otus-hw3 data-postgres-postgresql-0
+
+
+-------------------------------------------------------------------------------
+                                DOCKER
+-------------------------------------------------------------------------------
+Создание образа:
+sudo docker image rm andrewotuscourse/hw3-app
+sudo docker build -t andrewotuscourse/hw3-app:latest .
+docker push andrewotuscourse/hw3-app
+
+docker images
+docker run -it --rm andrewotuscourse/hw3-app
+
+-------------------------------------------------------------------------------
+                                K8S
+-------------------------------------------------------------------------------
+Проверка чарта: helm template . --debug
+
+kubectl delete clusterrole nginx-ingress
+kubectl delete clusterrolebinding nginx-ingress
+Перезапуск всех подов по маске: kubectl get pods -n otus-hw4 --no-headers=true | awk '/otus-hw-4-deploy/{print $1}'| xargs  kubectl delete -n otus-hw4 pod
+Подключение к поду БД: kubectl exec -it postgres-postgresql-0 -n otus-hw4  -- psql -h localhost -U root --password root -p 5432 -d postgres
+
+-------------------------------------------------------------------------------
+                                CheckHW
+-------------------------------------------------------------------------------
+curl http://arch.homework:80/api/v1/user/1
+
+
+
+
+-------------------------------------------------------------------------------
+                                Prometheus
+-------------------------------------------------------------------------------
+https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
+
+kubectl delete crd alertmanagerconfigs.monitoring.coreos.com
+kubectl delete crd alertmanagers.monitoring.coreos.com
+kubectl delete crd podmonitors.monitoring.coreos.com
+kubectl delete crd probes.monitoring.coreos.com
+kubectl delete crd prometheuses.monitoring.coreos.com
+kubectl delete crd prometheusrules.monitoring.coreos.com
+kubectl delete crd servicemonitors.monitoring.coreos.com
+kubectl delete crd thanosrulers.monitoring.coreos.com
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+helm -n otus-hw4 get values app > 2
+kubectl get -n otus-hw4 prometheus -o json
+
+kubectl port-forward -n otus-hw4 prometheus-app-kube-prometheus-stack-prometheus-0 9090 & kubectl port-forward -n otus-hw4 service/app-grafana 3000:80 & kubectl port-forward -n otus-hw4 service/app-ingress-nginx-controller 32187:80
+
+
+
+
+

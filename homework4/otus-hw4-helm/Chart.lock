@@ -1,0 +1,12 @@
+dependencies:
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 12.2.8
+- name: ingress-nginx
+  repository: https://kubernetes.github.io/ingress-nginx
+  version: 4.6.0
+- name: kube-prometheus-stack
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 45.10.1
+digest: sha256:06876a582cfdcf680c93b20d97d8c712c4b3d757af571f84c160caebad0dba47
+generated: "2023-04-16T14:10:34.275035329+03:00"
