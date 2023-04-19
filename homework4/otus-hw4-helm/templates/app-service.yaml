@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.app.service.name }}
   namespace: {{ .Values.app.namespace }}
   labels:
-    name: {{ .Values.app.service.name }}
+    app: {{ .Values.app.deploy.appName }}
 spec:
   type: ClusterIP
   selector:
@@ -13,4 +13,4 @@ spec:
     - port: 80
       protocol: TCP
       targetPort: 8000
-      name: http
+      name: http-traffic

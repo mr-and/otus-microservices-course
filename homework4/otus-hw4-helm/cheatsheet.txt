@@ -74,6 +74,11 @@ kubectl get -n otus-hw4 prometheus -o json
 kubectl port-forward -n otus-hw4 prometheus-app-kube-prometheus-stack-prometheus-0 9090 & kubectl port-forward -n otus-hw4 service/app-grafana 3000:80 & kubectl port-forward -n otus-hw4 service/app-ingress-nginx-controller 32187:80
 
 
+kubectl -n otus-hw4 get secret prometheus-app-kube-prometheus-stack-prometheus -ojson | jq -r '.data["prometheus.yaml.gz"]' | base64 -d | gunzip | grep metrics-monitor
+
+kubectl get servicemonitors.monitoring.coreos.com metrics-monitor -o yaml -n otus-hw4
+
+
 
 
 
