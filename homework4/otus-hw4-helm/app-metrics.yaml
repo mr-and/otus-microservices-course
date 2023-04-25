@@ -4,18 +4,19 @@ metadata:
   name: metrics-monitor
   labels:
     app: metrics-monitor
-  namespace: {{ .Values.app.namespace }}
+  namespace: otus-hw4
     
 spec:
   endpoints:
     - port: http-traffic
-      scrapeTimeout: 10s
-      path: "/actuator/prometheus"
+      scrapeTimeout: 30s
+      path: /actuator/prometheus
       honorLabels: true
       scheme: http
   namespaceSelector:
-    any: true
+    matchNames:
+      - default
+      - otus-hw4
   selector:
     matchLabels:
-      app: {{ .Values.app.deploy.appName }}
-      operated-prometheus: "true"
+      app: app

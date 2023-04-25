@@ -1,3 +1,17 @@
+How to run
+============================================================================
+cd into the project folder
+
+helm install app . -n otus-hw4
+helm dependency update
+helm install app . -n otus-hw4
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+helm install stack prometheus-community/kube-prometheus-stack -f prometheus.yaml -n otus-hw4
+
+
+
+
 -------------------------------------------------------------------------------
                                 HELM
 -------------------------------------------------------------------------------
@@ -44,11 +58,9 @@ kubectl delete clusterrolebinding nginx-ingress
 Подключение к поду БД: kubectl exec -it postgres-postgresql-0 -n otus-hw4  -- psql -h localhost -U root --password root -p 5432 -d postgres
 
 -------------------------------------------------------------------------------
-                                CheckHW
+                                URI of apps
 -------------------------------------------------------------------------------
 curl http://arch.homework:80/api/v1/user/1
-
-
 
 
 -------------------------------------------------------------------------------
@@ -67,17 +79,18 @@ kubectl delete crd thanosrulers.monitoring.coreos.com
 
 
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Helpful commands
+-------------------------------------------------------------------------------
 helm -n otus-hw4 get values app > 2
 kubectl get -n otus-hw4 prometheus -o json
 
 kubectl port-forward -n otus-hw4 prometheus-app-kube-prometheus-stack-prometheus-0 9090 & kubectl port-forward -n otus-hw4 service/app-grafana 3000:80 & kubectl port-forward -n otus-hw4 service/app-ingress-nginx-controller 32187:80
 
+kubectl port-forward -n otus-hw4 pservice/stack-kube-prometheus-stac-prometheus 9090 & kubectl port-forward -n otus-hw4 service/stack-grafana 3000:80 & kubectl port-forward -n otus-hw4 service/app-ingress-nginx-controller 32503:80
 
 kubectl -n otus-hw4 get secret prometheus-app-kube-prometheus-stack-prometheus -ojson | jq -r '.data["prometheus.yaml.gz"]' | base64 -d | gunzip | grep metrics-monitor
 
 kubectl get servicemonitors.monitoring.coreos.com metrics-monitor -o yaml -n otus-hw4
-
 
 
 
